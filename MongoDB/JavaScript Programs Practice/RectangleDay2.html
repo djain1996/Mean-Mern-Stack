@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>
+		Javascript OOP's Example
+	</title>
+	<script src="RectangleDay2.js"></script>
+</head>
+<body>
+	<script>
+		var length;
+		var breadth;
+
+		length = parseFloat(prompt("Enter the length? "));
+		breadth = parseFloat(prompt("Enter the breadth? "));
+
+		var r1 = new RectangleDay2 (length,breadth);
+		document.writeln("Area : "+r1.calculateArea()+" <br>");
+		document.writeln("Perimeter : "+r1.calculatePerimeter()+" <br>");
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>
+		Javascript OOP's Example
+	</title>
+	<script src="Point.js"></script>
+</head>
+<body>
+	<script>
+		var x;
+		var y;
+
+		x = parseInt(prompt("Enter the X co-ordinate of the first point? "));
+		y = parseInt(prompt("Enter the Y co-ordinate of the first point? "));
+
+		var c1 = new Point(x,y);
+		
+		x = parseInt(prompt("Enter the X co-ordinate of the second point? "));
+		y = parseInt(prompt("Enter the Y co-ordinate of the second point? "));
+		var c2 = new Point(x,y);
+		var c3 = c1.findDistance(c2);
+		document.writeln("Distance between two points is : "+c3);
+
+	</script>
+</body>
+</html>

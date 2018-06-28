@@ -1,0 +1,17 @@
+<html>
+<head>
+	<title>
+		Area and Perimeter of a rectangle
+	</title>
+</head>
+<body>
+	<script>
+		var side1 = parseFloat(prompt("Enter the side 1 of the triangle?"));
+		var side2 = parseFloat(prompt("Enter the side 2 of the triangle?"));
+		var side3 = parseFloat(prompt("Enter the side 3 of the triangle?"));
+		var s= (side1+side2+side3)/2;
+		var Area = Math.sqrt(s*(s-side1)*(s-side2)*(s-side3));
+		document.writeln("Area : "+Area);
+	</script>
+</body>
+</html>

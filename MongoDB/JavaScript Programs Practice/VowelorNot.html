@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>
+		Color Check
+	</title>
+</head>
+<body>
+	<script>
+		
+        //var flag;
+        do{
+        var num1 = parseInt(prompt("Enter the first number?"));
+		var num2 = parseInt(prompt("Enter the second number?"));
+		var operator = prompt("Enter the operation you want to perform?");
+		
+		switch(operator){
+			case '+' : var sum = num1 + num2;
+			alert("Addition will yield : "+sum);
+			break; 
+
+			case '-' : var subtract = num1 - num2;
+			alert("Subtraction will yield : "+subtract);
+			break;
+
+			case 'x' : var multiply = num1 * num2;
+			//document.writeln("Multiplication will yield : "+multiply);
+			case 'X' : var multiply = num1 * num2;
+			alert("Multiplication will yield : "+multiply); 
+			break;
+            
+            case '/' :
+            if(num2 != 0){
+			var divide = num1/num2;
+			alert("Division will yield : "+divide);
+		    }
+
+		    else{
+		    	alert("Division is not possible.");
+		    } 
+		    break;
+		    default : alert("Invalid Input.");
+           //var flag = prompt("Do you want to continue? Enter y for yes and n for no!");
+		}
+		 var flag = prompt("Do you want to continue? Enter y for yes and n for no!");
+	}while(flag == 'y' || flag == 'Y')
+
+	</script>
+</body>
+</html>

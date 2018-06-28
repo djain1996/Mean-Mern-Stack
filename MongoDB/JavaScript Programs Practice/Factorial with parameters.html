@@ -1,0 +1,38 @@
+<html>
+<head>
+	<title>
+		Using Functions
+	</title>
+</head>
+<body>
+	<script>
+		
+		function calculateFactorial(num){
+			fact =1; 
+			for(var i =1;i<=num;i++)
+			{
+				fact = fact * i;
+			}
+			return (fact);
+		}
+
+		function calculateNcR(n,r){
+			//var f = calculateFactorial(n-r);
+		   // var factorial= parseInt(n/(r * f));
+		    var factorial = parseInt(calculateFactorial(n)/(calculateFactorial(r)*(calculateFactorial(n-r))));
+			return factorial;	
+		}
+
+		var n = parseInt(prompt("Enter n? "));
+		var r = parseInt(prompt("Enter r? "));
+
+
+		//var n_fact = calculateFactorial(n);
+		//var r_fact = calculateFactorial(r);
+
+		var finalValue = calculateNcR(n,r);
+		alert(finalValue);
+
+	</script>
+</body>
+</html>

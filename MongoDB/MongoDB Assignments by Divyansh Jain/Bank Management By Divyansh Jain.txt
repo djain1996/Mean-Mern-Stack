@@ -1,0 +1,158 @@
+//Use a Database
+use Bank
+
+//Sample Insert Query
+ db.bank.insert({_accountNumber : 1006,Balance : 190,customerDetails : {_customerId :"C007" , customerName :"Chanda",street : "GoHill", city : "Pune", loanAmount:0, depositAmount :1120}, branchDetails : {branchName:"St.Wall street",branchCity : "Pune",assets : 10900 }})
+
+//Display Database
+>
+
+
+
+Assignment Questions
+
+1.)Primary Key : _accountNumber 
+
+
+
+2.)Index on Primary Key (done)
+//Creating Index
+db.bank.createIndex({"_accountNumber" : 1},{unique:true})
+
+
+ 
+3.)  db.bank.find({"customerDetails.loanAmount" :{$gt:0}},{"customerDetails.customerName":1,"customerDetails.city":1})
+
+{ "_id" : ObjectId("5b2cdf30dacb1db098bc9482"), "customerDetails" : { "customerName" : "Divyansh Jain", "city" : "Chennai" } }
+{ "_id" : ObjectId("5b2ce0d4dacb1db098bc9483"), "customerDetails" : { "customerName" : "Sarthak Kohli", "city" : "Chennai" } }
+{ "_id" : ObjectId("5b2ce1b1dacb1db098bc9484"), "customerDetails" : { "customerName" : "Mayank Joshi", "city" : "Chennai" } }
+{ "_id" : ObjectId("5b2ce38bdacb1db098bc9485"), "customerDetails" : { "customerName" : "Shri Valli", "city" : "Pune" } }
+{ "_id" : ObjectId("5b2ce599dacb1db098bc9487"), "customerDetails" : { "customerName" : "Sridevi", "city" : "Hyderabad" }}
+
+
+
+
+4.)  db.bank.find({$and:[{"customerDetails.loanAmount" :{$gt:0}},{"customerDetails.city" :"Chennai"}]},{"customerDetails.customerName":1})
+
+{ "_id" : ObjectId("5b2cdf30dacb1db098bc9482"), "customerDetails" : { "customerName" : "Divyansh Jain" } }
+{ "_id" : ObjectId("5b2ce0d4dacb1db098bc9483"), "customerDetails" : { "customerName" : "Sarthak Kohli" } }
+{ "_id" : ObjectId("5b2ce1b1dacb1db098bc9484"), "customerDetails" : { "customerName" : "Mayank Joshi" } }
+
+
+
+
+5.)   db.bank.find({},{"branchDetails.branchName":1,"branchDetails.branchCity":1,"branchDetails.assets":1}).sort({"branchDetails.assets":-1}).limit(1)
+
+{ "_id" : ObjectId("5b2cdf30dacb1db098bc9482"), "branchDetails" : { "branchName" : "St. Kaithel Street", "branchCity" : "Chennai", "assets" : 120000 } }
+
+
+
+6.)   db.bank.find({$and :[{"customerDetails.city" :"Pune"},{"customerDetails.loanAmount":{$gt:0}}]},{"customerDetails.customerName": 1,"customerDetails.city":1})
+
+{ "_id" : ObjectId("5b2ce38bdacb1db098bc9485"), "customerDetails" : { "customerName" : "Shri Valli", "city" : "Pune" } }
+
+
+
+
+7.)     db.bank.aggregate([{$match: {$and:[{Balance :{$gt:700}},{Balance :{$lt:900}}]}},{$count :"_accountNumber"}])
+
+{ "_accountNumber" : 1 }
+
+
+
+
+8.)     db.bank.find({$and:[{"customerDetails.loanAmount":{$gt:0}},{"customerDetails.depositAmount":{$gt:0}},{"customerDetails.city":"Pune"}]},{"customerDetails.customerName":1})
+
+{ "_id" : ObjectId("5b2ce38bdacb1db098bc9485"), "customerDetails" : { "customerName" : "Shri Valli" } } 
+
+
+
+
+
+9.)    > db.bank.find( { $where : "this.customerDetails.loanAmount >(this.Balance + this.customerDetails.depositAmount)" } ).pretty()
+
+{
+        "_id" : ObjectId("5b2ce38bdacb1db098bc9485"),
+        "_accountNumber" : 1003,
+        "Balance" : 150,
+        "customerDetails" : {
+                "_customerId" : "C004",
+                "customerName" : "Shri Valli",
+                "street" : "Goliyar street",
+                "city" : "Pune",
+                "loanAmount" : 900,
+                "depositAmount" : 120
+        },
+        "branchDetails" : {
+                "branchName" : "St.Wall street",
+                "branchCity" : "Pune",
+                "assets" : 10900
+        }
+}
+{
+        "_id" : ObjectId("5b2ce599dacb1db098bc9487"),
+        "_accountNumber" : 1004,
+        "Balance" : 150,
+        "customerDetails" : {
+                "_customerId" : "C005",
+                "customerName" : "Sridevi",
+                "street" : "GoliHill street",
+                "city" : "Hyderabad",
+                "loanAmount" : 1900,
+                "depositAmount" : 1120
+        },
+        "branchDetails" : {
+                "branchName" : "St.Wall street",
+                "branchCity" : "Pune",
+                "assets" : 10900
+        }
+}
+
+
+
+
+
+
+10.)      db.bank.find({"customerDetails.street":{$regex:/Hill$/}},{"customerDetails.customerName":1})
+
+{ "_id" : ObjectId("5b2cf737dacb1db098bc9489"), "customerDetails" : { "customerName" : "Chanda" } }
+
+
+
+
+11.)      db.bank.find({$and : [{"branchDetails.branchCity":"Pune"},{"customerDetails.loanAmount":{$lt:1}}]},{"customerDetails.customerName":1})
+
+{ "_id" : ObjectId("5b2ce646dacb1db098bc9488"), "customerDetails" : { "customerName" : "Mahadevi" } }
+{ "_id" : ObjectId("5b2cf737dacb1db098bc9489"), "customerDetails" : { "customerName" : "Chanda" } }
+
+
+
+
+
+12.)     
+
+
+
+
+13.)    db.bank.aggregate([{$group:{_id :"$branchDetails.branchName",AvgBalance : {$sum :"$Balance"}}},{$sort:{AvgBalance : -1}},{$limit : 1}])
+
+{ "_id" : "St.Wall street", "AvgBalance" : 20870 }
+
+
+
+
+14.)    db.bank.aggregate([{$group:{_id : "$branchDetails.branchName",totalcount: {$sum :1}}}])
+
+{ "_id" : "St.Wall street", "totalcount" : 4 }
+{ "_id" : "St. loru Street", "totalcount" : 1 }
+{ "_id" : "St. Poriyar Street", "totalcount" : 1 }
+{ "_id" : "St. Kaithel Street", "totalcount" : 1 }
+
+
+
+
+
+15.)  db.bank.update({"customerDetails.customerName":"Ram"},{$inc:{"customerDetails.depositAmount":200}})
+
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 }) 
+
